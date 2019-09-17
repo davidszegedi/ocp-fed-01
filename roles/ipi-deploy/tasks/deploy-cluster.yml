@@ -1,0 +1,50 @@
+---
+- name: Create config backup folders
+  file:
+    path: "~/{{ var_demofolder_name }}/{{ item.name }}/bkp"
+    state: directory
+  loop: "{{ var_cluster_info }}"
+
+- name: Backup configuration files before deployment
+  copy:
+    src: "~/{{ var_demofolder_name }}/{{ item.name }}/{{ var_installconfig }}"
+    dest: "~/{{ var_demofolder_name }}/{{ item.name }}/bkp"
+  loop: "{{ var_cluster_info }}"
+
+- name: Backup state files before deployment
+  copy:
+    src: "~/{{ var_demofolder_name }}/{{ item.name }}/{{ var_openshiftinstallstate }}"
+    dest: "~/{{ var_demofolder_name }}/{{ item.name }}/bkp"
+  loop: "{{ var_cluster_info }}"
+
+- name: Deploy OpenShift cluster(s) in parallel
+  shell: "./openshift-install create cluster --log-level=debug"
+  args:
+    chdir: "~/{{ var_demofolder_name }}/{{ item.name }}/"
+  loop: "{{ var_cluster_info }}"
+  when: item.deploy == true
+  register: cluster_deployment
+  async: 3600
+  poll: 0
+
+- name: Wait for OpenShift cluster(s) deployment result(s)
+  async_status:
+    jid: "{{ item.ansible_job_id }}"
+  register: cluster_deployment_status
+  until: cluster_deployment_status.finished
+  retries: 70
+  delay: 60
+  loop: "{{ cluster_deployment.results }}"
+
+- name: Tail openshift_install.log
+  shell: "tail .openshift_install.log"
+  args:
+    chdir: "~/{{ var_demofolder_name }}/{{ item.name }}/"
+  loop: "{{ var_cluster_info }}"
+  when: item.deploy == true
+  register: tail_output
+
+- name: Show Tail output
+  debug:
+    var: item
+  loop: "{{ tail_output.results }}"
