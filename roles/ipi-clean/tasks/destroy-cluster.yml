@@ -2,7 +2,7 @@
 - name: Destroy OpenShift cluster(s) in parallel
   shell: "./openshift-install destroy cluster "
   args:
-    chdir: "~/{{ var_demofolder_name }}/{{ item.name }}/"
+    chdir: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ item.name }}/"
   loop: "{{ var_cluster_info }}"
   when: item.destroy == true
   register: cluster_destruction
@@ -20,24 +20,24 @@
 
 - name: Remove .openshift_install.log file
   file:
-    path: "~/{{ var_demofolder_name }}/{{ item.name }}/.openshift_install.log"
+    path: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ item.name }}/.openshift_install.log"
     state: absent
   loop: "{{ var_cluster_info }}"
 
 - name: Remove terraform.tfstate file
   file:
-    path: "~/{{ var_demofolder_name }}/{{ item.name }}/terraform.tfstate"
+    path: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ item.name }}/terraform.tfstate"
     state: absent
   loop: "{{ var_cluster_info }}"
 
 - name: Restore configuration template to clusters folders
   template:
-    src: "~/{{ var_demofolder_name }}/{{ item.name }}/bkp//install-config.yaml"
-    dest: "~/{{ var_demofolder_name }}/{{ item.name }}/"
+    src: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ item.name }}/bkp//install-config.yaml"
+    dest: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ item.name }}/"
   loop: "{{ var_cluster_info }}"
 
 - name: Restore configuration state to clusters folders
   template:
-    src: "~/{{ var_demofolder_name }}/{{ item.name }}/bkp/.openshift_install_state.json"
-    dest: "~/{{ var_demofolder_name }}/{{ item.name }}/"
+    src: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ item.name }}/bkp/.openshift_install_state.json"
+    dest: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ item.name }}/"
   loop: "{{ var_cluster_info }}"

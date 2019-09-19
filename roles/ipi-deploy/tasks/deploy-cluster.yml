@@ -1,26 +1,26 @@
 ---
 - name: Create config backup folders
   file:
-    path: "~/{{ var_demofolder_name }}/{{ item.name }}/bkp"
+    path: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ item.name }}/bkp"
     state: directory
   loop: "{{ var_cluster_info }}"
 
 - name: Backup configuration files before deployment
   copy:
-    src: "~/{{ var_demofolder_name }}/{{ item.name }}/{{ var_installconfig }}"
-    dest: "~/{{ var_demofolder_name }}/{{ item.name }}/bkp"
+    src: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ item.name }}/{{ var_installconfig }}"
+    dest: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ item.name }}/bkp"
   loop: "{{ var_cluster_info }}"
 
 - name: Backup state files before deployment
   copy:
-    src: "~/{{ var_demofolder_name }}/{{ item.name }}/{{ var_openshiftinstallstate }}"
-    dest: "~/{{ var_demofolder_name }}/{{ item.name }}/bkp"
+    src: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ item.name }}/{{ var_openshiftinstallstate }}"
+    dest: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ item.name }}/bkp"
   loop: "{{ var_cluster_info }}"
 
 - name: Deploy OpenShift cluster(s) in parallel
   shell: "./openshift-install create cluster --log-level=debug"
   args:
-    chdir: "~/{{ var_demofolder_name }}/{{ item.name }}/"
+    chdir: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ item.name }}/"
   loop: "{{ var_cluster_info }}"
   when: item.deploy == true
   register: cluster_deployment
@@ -39,7 +39,7 @@
 - name: Tail openshift_install.log
   shell: "tail .openshift_install.log"
   args:
-    chdir: "~/{{ var_demofolder_name }}/{{ item.name }}/"
+    chdir: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ item.name }}/"
   loop: "{{ var_cluster_info }}"
   when: item.deploy == true
   register: tail_output
