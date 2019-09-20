@@ -3,4 +3,4 @@
   include_tasks: "deploy-cluster.yml"
 
 - name: Concat Kubeconfig
-  includes_tasks: "kubeconfig-concat.yml"
+  include_tasks: "kubeconfig-concat.yml"
