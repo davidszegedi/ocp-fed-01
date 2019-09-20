@@ -1,0 +1,7 @@
+---
+- name: "Deploy ArgoCD on OpenShift Cluster"
+  hosts: localhost
+  gather_facts: no
+
+  roles:
+    - role: "ocp4-workload-rhte-kubefed-app-portability"
