@@ -1,6 +1,8 @@
 ---
 - name: Deploy ocp cluster(s)
   include_tasks: "deploy-cluster.yml"
+  tags:
+    - deploy
 
 - name: Concat Kubeconfig
   include_tasks: "kubeconfig-concat.yml"
