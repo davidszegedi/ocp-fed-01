@@ -41,3 +41,15 @@
     src: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ item.name }}/bkp/.openshift_install_state.json"
     dest: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ item.name }}/"
   loop: "{{ var_cluster_info }}"
+
+- name: Ensure Cloned Git Repository is Removed
+  file:
+    path: "/home/{{ _clientvm_student_user }}/Git/{{ _lab_git_clone_dir_name }}"
+    state: absent
+  become: true
+
+- name: Ensure Cloned Gog Repository is Removed
+  file:
+    path: "/home/{{ _clientvm_student_user }}/Git/{{ _lab_gogs_clone_dir_name }}"
+    state: absent
+  become: true

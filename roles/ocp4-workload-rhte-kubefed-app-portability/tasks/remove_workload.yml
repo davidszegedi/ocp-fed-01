@@ -24,9 +24,15 @@
     - /usr/local/bin/cfssljson
   become: true
 
-- name: Ensure Cloned Repository is Removed
+- name: Ensure Cloned Git Repository is Removed
   file:
-    path: "/home/{{ _clientvm_student_user }}/{{ _lab_git_clone_dir_name }}"
+    path: "/home/{{ _clientvm_student_user }}/Git/{{ _lab_git_clone_dir_name }}"
+    state: absent
+  become: true
+
+- name: Ensure Cloned Gog Repository is Removed
+  file:
+    path: "/home/{{ _clientvm_student_user }}/Git/{{ _lab_gogs_clone_dir_name }}"
     state: absent
   become: true
 

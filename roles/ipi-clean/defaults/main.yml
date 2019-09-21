@@ -8,3 +8,4 @@ var_cluster_info:
 
 _lab_git_clone_dir_name: "federation-dev-github"
 _lab_gogs_clone_dir_name: "federation-dev"
+_clientvm_student_user: "user1"
