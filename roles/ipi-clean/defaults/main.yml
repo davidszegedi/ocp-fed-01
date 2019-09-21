@@ -5,3 +5,6 @@ var_cluster_info:
   - { name: cluster01, region: eu-west-3, destroy: true }
   - { name: cluster02, region: eu-central-1, destroy: true }
   - { name: cluster03, region: eu-west-1, destroy: true }
+
+_lab_git_clone_dir_name: "federation-dev-github"
+_lab_gogs_clone_dir_name: "federation-dev"

@@ -21,7 +21,7 @@
     file: ./post_workload.yml
     apply:
       become: "{{ become_override | bool }}"
-  when: ACTION == "create" or ACTION == "provision"
+  when: ACTION == "create" or ACTION == "provision" or ACTION == "post"
 
 - name: Running Workload removal Tasks
   include_tasks:
