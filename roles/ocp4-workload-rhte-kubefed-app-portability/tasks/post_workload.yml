@@ -39,6 +39,7 @@
     headers:
       Content-Type: "application/json"
       Authorization: "token {{ gogs_api_token.json.sha1 }}"
+  ignore_errors: yes
 
 - set_fact:
     lab_gogs_repo: "http://{{ _gogs_default_user }}:{{ _gogs_default_user_password }}@{{ gogs_route_hostname }}/{{ _gogs_default_user }}/federation-dev.git"
