@@ -71,12 +71,12 @@
   delegate_to: "{{ inventory_hostname }}"
   become: true
 
-#- name: Ensure new repo content is added, committed and pushed
-#  shell: "git add --all && git commit -m 'First upload' && git push origin master"
-#  args:
-#    chdir: "/home/{{ _clientvm_student_user }}/Git/{{ _lab_gogs_clone_dir_name }}/"
-#  become: true
-#  become_user: "{{ _clientvm_student_user }}"
+- name: Ensure new repo content is added, committed and pushed
+  shell: "git add --all && git commit -m 'First upload' && git push origin master"
+  args:
+    chdir: "/home/{{ _clientvm_student_user }}/Git/{{ _lab_gogs_clone_dir_name }}/"
+  become: true
+  become_user: "{{ _clientvm_student_user }}"
 
 # Leave this as the last task in the playbook.
 - name: post_workload tasks complete
