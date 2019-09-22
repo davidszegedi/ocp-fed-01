@@ -119,7 +119,7 @@
 - name: Ensure Gogs default user is initialized
   command: oc -n "{{ _gogs_project }}" exec "{{ gogs_server_pod_name.stdout }}" init-gogs "{{ _gogs_default_user }}" "{{ _gogs_default_user_password }}" "{{ _gogs_default_user_mail }}"
   ignore_errors: yes
-  
+
 - name: Ensure cfssl Tool is Downloaded
   get_url:
     url: "https://pkg.cfssl.org/{{ _cfssl_release }}/cfssl_linux-amd64"

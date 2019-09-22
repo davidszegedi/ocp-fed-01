@@ -78,6 +78,14 @@
   become: true
   become_user: "{{ _clientvm_student_user }}"
 
+- name: Add OpenShift servers to ArgoCD cluster
+  shell: /usr/local/bin/argocd --insecure --grpc-web login $(oc --context cluster1 -n argocd get route argocd-server -o jsonpath="{.status.ingress[*].host}{\"\n\"}"):443 --username {{ _argocd_default_user }} --password {{ _argocd_default_user_password }}; /usr/local/bin/argocd-add-clusters; /usr/local/bin/argocd cluster list
+  args:
+    chdir: "/home/{{ _clientvm_student_user }}"
+  become: true
+  become_user: "{{ _clientvm_student_user }}"
+  ignore_errors: yes
+
 # Leave this as the last task in the playbook.
 - name: post_workload tasks complete
   debug:
