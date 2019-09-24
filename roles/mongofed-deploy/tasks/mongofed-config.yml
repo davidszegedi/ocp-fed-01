@@ -1,30 +1,10 @@
 ---
-- name: "Generate 01-mongo-federated-secret.yaml"
-  template:
-    src: 01-mongo-federated-secret.yaml.j2
-    dest: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ var_mongofed_configfolder_name }}/01-mongo-federated-secret.yaml"
+- name: Copy mongofed base folder
+  copy:
+    src: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/lab-6-assets/base"
+    dst: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ var_mongofed_configfolder_name }}/base"
 
-- name: Update mongodb.pem
-  shell: "sed -i \"s/mongodb.pem: .*$/mongodb.pem: $(openssl base64 -A < ../certs/mongo.pem)/\" 01-mongo-federated-secret.yaml"
-  args:
-    chdir: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ var_mongofed_configfolder_name }}/"
-
-- name: Update ca.pem
-  shell: "sed -i \"s/ca.pem: .*$/ca.pem: $(openssl base64 -A < ../certs/ca.pem)/\" 01-mongo-federated-secret.yaml"
-  args:
-    chdir: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ var_mongofed_configfolder_name }}/"
-
-- name: "Generate 02-mongo-federated-service.yaml.j2"
-  template:
-    src: 02-mongo-federated-service.yaml.j2
-    dest: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ var_mongofed_configfolder_name }}/02-mongo-federated-service.yaml"
-
-- name: "Generate 03-mongo-federated-pvc.yaml"
-  template:
-    src: 03-mongo-federated-pvc.yaml.j2
-    dest: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ var_mongofed_configfolder_name }}/03-mongo-federated-pvc.yaml"
-
-- name: "Generate 04-mongo-federated-deployment-rs.yaml"
-  template:
-    src: 04-mongo-federated-deployment-rs.yaml.j2
-    dest: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ var_mongofed_configfolder_name }}/04-mongo-federated-deployment-rs.yaml"
+- name: Copy mongofed overlays folder
+  copy:
+    src: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/lab-6-assets/overlays"
+    dst: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ var_mongofed_configfolder_name }}/overlays"
