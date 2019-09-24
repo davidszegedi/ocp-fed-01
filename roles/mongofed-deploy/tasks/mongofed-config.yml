@@ -2,9 +2,19 @@
 - name: Copy mongofed base folder
   copy:
     src: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/lab-6-assets/base"
-    dest: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ var_mongofed_configfolder_name }}/base"
+    dest: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ var_mongofed_configfolder_name }}"
 
 - name: Copy mongofed overlays folder
   copy:
     src: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/lab-6-assets/overlays"
-    dest: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ var_mongofed_configfolder_name }}/overlays"
+    dest: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ var_mongofed_configfolder_name }}"
+
+- name: Update mongodb.pem
+  shell: "sed -i \"s/mongodb.pem: .*$/mongodb.pem: $(openssl base64 -A < ../certs/mongo.pem)/\" mongo-secret.yaml
+  args:
+    chdir: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ var_mongofed_configfolder_name }}/base"
+
+- name: Update ca.pem
+  shell: "sed -i \"s/ca.pem: .*$/ca.pem: $(openssl base64 -A < ../certs/ca.pem)/\" mongo-secret.yaml"
+  args:
+    chdir: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ var_mongofed_configfolder_name }}/base"
