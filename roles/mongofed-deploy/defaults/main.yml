@@ -9,6 +9,14 @@ var_secondary_node: mongo-cluster2.apps.cluster2.rheventdemo.com:443
 var_third_node: mongo-cluster3.apps.cluster3.rheventdemo.com:443
 var_replica_members: mongo-cluster1.apps.cluster1.rheventdemo.com:443,mongo-cluster2.apps.cluster2.rheventdemo.com:443,mongo-cluster3.apps.cluster3.rheventdemo.com:443
 
+_clientvm_student_user: "user1"
+_argocd_project: "argocd"
+_argocd_project_display: "ArgoCD Server"
+_argocd_server_deployment: "argocd-server"
+_argocd_default_user: "admin"
+_argocd_default_user_password: "r3dh4t1!"
+
+
 var_cluster_info:
   - { name: cluster1, region: eu-west-3, deploy: true }
   - { name: cluster2, region: eu-central-1, deploy: true }
@@ -18,20 +26,3 @@ var_cluster_list:
   - cluster1
   - cluster2
   - cluster3
-
-
-#install_state: present
-
-
-#var_mongodb_pem_data_path: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ var_certdir_name }}/mongo.pem"
-#var_ca_pem_data_path: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ var_certdir_name }}/ca.pem"
-#var_mongodb_pem_data: "{{ lookup('file', var_mongodb_pem_data_path) | b64encode }}"
-#var_ca_pem_data: "{{ lookup('file', var_ca_pem_data_path) | b64encode }}"
-
-#var_mongo_db_external_port: 27017
-#var_mongo_db_internal_port: 27017
-
-#var_mongofed_service: mongo
-#var_mongofed_namespace: mongo
-
-#var_oc_operation: create
