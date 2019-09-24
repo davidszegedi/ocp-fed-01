@@ -3,7 +3,9 @@ _lab_gogs_clone_dir_name: "federation-dev"
 var_certdir_name: certs
 var_user_homepath: "/home/user1"
 var_demofolder_name: fed-ocp-demo
-#var_mongofed_configfolder_name: mongofed
+
+var_primary_node: mongo-cluster1.apps.cluster1.rheventdemo.com:443
+var_replica_members: mongo-cluster1.apps.cluster1.rheventdemo.com:443,mongo-cluster2.apps.cluster2.rheventdemo.com:443,mongo-cluster3.apps.cluster3.rheventdemo.com:443
 
 var_cluster_info:
   - { name: cluster1, region: eu-west-3, deploy: true }
@@ -16,21 +18,18 @@ var_cluster_list:
   - cluster3
 
 
-install_state: present
+#install_state: present
 
 
-var_mongodb_pem_data_path: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ var_certdir_name }}/mongo.pem"
-var_ca_pem_data_path: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ var_certdir_name }}/ca.pem"
-var_mongodb_pem_data: "{{ lookup('file', var_mongodb_pem_data_path) | b64encode }}"
-var_ca_pem_data: "{{ lookup('file', var_ca_pem_data_path) | b64encode }}"
+#var_mongodb_pem_data_path: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ var_certdir_name }}/mongo.pem"
+#var_ca_pem_data_path: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ var_certdir_name }}/ca.pem"
+#var_mongodb_pem_data: "{{ lookup('file', var_mongodb_pem_data_path) | b64encode }}"
+#var_ca_pem_data: "{{ lookup('file', var_ca_pem_data_path) | b64encode }}"
 
-var_mongo_db_external_port: 27017
-var_mongo_db_internal_port: 27017
+#var_mongo_db_external_port: 27017
+#var_mongo_db_internal_port: 27017
 
-var_mongofed_service: mongo
-var_mongofed_namespace: mongo
+#var_mongofed_service: mongo
+#var_mongofed_namespace: mongo
 
-var_primary_node: mongo-cluster1.apps.cluster01.rheventdemo.com:443
-var_replica_members: mongo-cluster1.apps.cluster01.rheventdemo.com:443,mongo-cluster2.apps.cluster02.rheventdemo.com:443,mongo-cluster3.apps.cluster03.rheventdemo.com:443
-
-var_oc_operation: create
+#var_oc_operation: create
