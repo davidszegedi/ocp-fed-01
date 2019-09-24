@@ -10,11 +10,11 @@
     dest: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ var_mongofed_configfolder_name }}"
 
 - name: Update mongodb.pem
-  shell: "sed -i \"s/mongodb.pem: .*$/mongodb.pem: $(openssl base64 -A < ../certs/mongo.pem)/\" mongo-secret.yaml"
+  shell: "sed -i \"s/mongodb.pem: .*$/mongodb.pem: $(openssl base64 -A < ../certs/mongo.pem)/\" base/mongo-secret.yaml"
   args:
-    chdir: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ var_mongofed_configfolder_name }}/base"
+    chdir: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ var_mongofed_configfolder_name }}"
 
 - name: Update ca.pem
-  shell: "sed -i \"s/ca.pem: .*$/ca.pem: $(openssl base64 -A < ../certs/ca.pem)/\" mongo-secret.yaml"
+  shell: "sed -i \"s/ca.pem: .*$/ca.pem: $(openssl base64 -A < ../certs/ca.pem)/\" base/mongo-secret.yaml"
   args:
-    chdir: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ var_mongofed_configfolder_name }}/base"
+    chdir: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ var_mongofed_configfolder_name }}"
