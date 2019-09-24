@@ -4,9 +4,9 @@ var_certdir_name: certs
 var_user_homepath: "/home/user1"
 var_demofolder_name: fed-ocp-demo
 
-var_primary_node: mongo-cluster1.apps.cluster1.rheventdemo.com:443
-var_secondary_node: mongo-cluster2.apps.cluster2.rheventdemo.com:443
-var_third_node: mongo-cluster3.apps.cluster3.rheventdemo.com:443
+var_primary_node: mongo-cluster1.apps.cluster1.rheventdemo.com
+var_secondary_node: mongo-cluster2.apps.cluster2.rheventdemo.com
+var_third_node: mongo-cluster3.apps.cluster3.rheventdemo.com
 var_replica_members: mongo-cluster1.apps.cluster1.rheventdemo.com:443,mongo-cluster2.apps.cluster2.rheventdemo.com:443,mongo-cluster3.apps.cluster3.rheventdemo.com:443
 
 _clientvm_student_user: "user1"
