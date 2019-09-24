@@ -23,3 +23,18 @@
   shell: "sed -i \"s/replicamembershere/{{ var_replica_members }}/\" base/mongo-rs-deployment.yaml"
   args:
     chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/lab-6-assets"
+
+- name: Update mongocluster1route
+  shell: "sed -i \"s/mongocluster1route/{{ var_primary_node }}/\" overlays/cluster1/mongo-route.yaml"
+  args:
+    chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/lab-6-assets"
+
+- name: Update mongocluster2route
+  shell: "sed -i \"s/mongocluster2route/{{ var_secondary_node }}/\" overlays/cluster2/mongo-route.yaml"
+  args:
+    chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/lab-6-assets"
+
+- name: Update mongocluster3route
+  shell: "sed -i \"s/mongocluster3route/{{ var_third_node }}/\" overlays/cluster3/mongo-route.yaml"
+  args:
+    chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/lab-6-assets"
