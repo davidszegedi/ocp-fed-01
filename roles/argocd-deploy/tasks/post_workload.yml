@@ -85,7 +85,7 @@
     chdir: "/home/{{ _clientvm_student_user }}"
   become: true
   become_user: "{{ _clientvm_student_user }}"
-  ignore_errors: yes
+  #ignore_errors: yes
 
 # Leave this as the last task in the playbook.
 - name: post_workload tasks complete
