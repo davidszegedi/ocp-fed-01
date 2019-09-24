@@ -6,6 +6,8 @@ silent: False
 
 ACTION: "provision"
 
+argocd_route_hostname: argocd.apps.cluster1.rheventdemo.com
+
 _kubefed_project: "kube-federation-system"
 _kubefed_project_display: "KubeFed Federation System"
 _kubefed_subscription_csv: "kubefed-operator.v0.1.0"
