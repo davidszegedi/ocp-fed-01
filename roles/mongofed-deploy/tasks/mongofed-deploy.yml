@@ -1,6 +1,6 @@
 ---
 - name: Create application with ArgoCD
-  shell: /usr/local/bin/argocd --insecure --grpc-web login $(oc --context cluster1 -n argocd get route argocd-server -o jsonpath="{.status.ingress[*].host}{\"\n\"}"):443 --username {{ _argocd_default_user }} --password {{ _argocd_default_user_password }}; argocd app create --project default --name {{ item }}-mongo --repo http://$(oc --context {{ item }} -n gogs get route gogs -o jsonpath='{.spec.host}')/student/federation-dev.git --path labs/lab-6-assets/overlays/{{ item }} --dest-server $(argocd cluster list | grep {{ item }} | awk '{print $1}') --dest-namespace mongo --revision master --sync-policy automated
+  shell: /usr/local/bin/argocd --insecure --grpc-web login $(oc --context cluster1 -n argocd get route argocd-server -o jsonpath="{.status.ingress[*].host}{\"\n\"}"):443 --username {{ _argocd_default_user }} --password {{ _argocd_default_user_password }}; argocd app create --project default --name {{ item }}-mongo --repo http://$(oc --context cluster1 -n gogs get route gogs -o jsonpath='{.spec.host}')/student/federation-dev.git --path labs/lab-6-assets/overlays/{{ item }} --dest-server $(argocd cluster list | grep {{ item }} | awk '{print $1}') --dest-namespace mongo --revision master --sync-policy automated
   args:
     chdir: "{{ var_user_homepath }}"
   become: true
