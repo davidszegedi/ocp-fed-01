@@ -1,4 +1,53 @@
 ---
+
+
+- name: Copy certs folder
+  copy:
+    src: "{{ var_user_homepath }}/{{ var_demofolder_name }}/{{ var_certdir_name }}/"
+    dest: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/lab-6-assets"
+
+- name: Update mongodb.pem
+  shell: "sed -i \"s/mongodb.pem: .*$/mongodb.pem: $(openssl base64 -A < mongo.pem)/\" base/mongo-secret.yaml"
+  args:
+    chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/lab-6-assets"
+
+- name: Update ca.pem
+  shell: "sed -i \"s/ca.pem: .*$/ca.pem: $(openssl base64 -A < ca.pem)/\" base/mongo-secret.yaml"
+  args:
+    chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/lab-6-assets"
+
+- name: Update Primary node
+  shell: "sed -i \"s/primarynodehere/{{ var_primary_node }}:443/\" base/mongo-rs-deployment.yaml"
+  args:
+    chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/lab-6-assets"
+
+- name: Update Replicas Members
+  shell: "sed -i \"s/replicamembershere/{{ var_replica_members }}/\" base/mongo-rs-deployment.yaml"
+  args:
+    chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/lab-6-assets"
+
+- name: Update mongocluster1route
+  shell: "sed -i \"s/mongocluster1route/{{ var_primary_node }}/\" overlays/cluster1/mongo-route.yaml"
+  args:
+    chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/lab-6-assets"
+
+- name: Update mongocluster2route
+  shell: "sed -i \"s/mongocluster2route/{{ var_secondary_node }}/\" overlays/cluster2/mongo-route.yaml"
+  args:
+    chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/lab-6-assets"
+
+- name: Update mongocluster3route
+  shell: "sed -i \"s/mongocluster3route/{{ var_third_node }}/\" overlays/cluster3/mongo-route.yaml"
+  args:
+    chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/lab-6-assets"
+
+- name: Commit changes
+  shell: "git commit -am 'MongoDB Certificates and MongoDB Routes' && git push origin master"
+  args:
+    chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/lab-6-assets"
+
+
+
 - name: Create application with ArgoCD
   shell: /usr/local/bin/argocd --insecure --grpc-web login $(oc --context cluster1 -n argocd get route argocd-server -o jsonpath="{.status.ingress[*].host}{\"\n\"}"):443 --username {{ _argocd_default_user }} --password {{ _argocd_default_user_password }}; argocd app create --project default --name {{ item }}-mongo --repo http://$(oc --context cluster1 -n gogs get route gogs -o jsonpath='{.spec.host}')/student/federation-dev.git --path labs/lab-6-assets/overlays/{{ item }} --dest-server $(argocd cluster list | grep {{ item }} | awk '{print $1}') --dest-namespace mongo --revision master --sync-policy automated
   args:

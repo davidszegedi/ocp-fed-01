@@ -3,11 +3,13 @@
   shell: "oc --context cluster1 create ns haproxy-lb"
   args:
     chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/haproxy-yaml"
+  ignore_errors: yes
 
 - name: Create the HAProxy route for external acces
   shell: "oc --context cluster1 -n haproxy-lb create route edge haproxy-lb --service=haproxy-lb-service --port=8080 --insecure-policy=Allow --hostname=pacman-multicluster.$(oc --context=cluster1 get ingresses.config.openshift.io cluster -o jsonpath='{ .spec.domain }')"
   args:
     chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/haproxy-yaml"
+  ignore_errors: yes
 
 - name: Update HAProxy configuration
   shell: "sed -i \"/option httpchk GET/a \\ \\ \\ \\ http-request set-header Host pacman-ingress.$(oc --context=cluster1 get ingresses.config.openshift.io cluster -o jsonpath='{ .spec.domain }')\" haproxy.tmpl"
