@@ -27,3 +27,7 @@
     chdir: "{{ var_user_homepath }}"
   become: true
   become_user: "{{ _clientvm_student_user }}"
+
+- name: Wait for replicaset configuration
+  pause:
+    seconds: 30
