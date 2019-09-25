@@ -1,8 +1,8 @@
 # ocp-cluster-01
 
-A - Git clone this repository on you local folder
+1 - Git clone this repository on you local folder (your user should have sudo privileges)
 
-B - Create AWS credentials in your home folder:
+2 - Create AWS credentials in your home folder:
 
         $ cat ~/.aws/credentials
 
@@ -11,7 +11,7 @@ B - Create AWS credentials in your home folder:
         aws_access_key_id     = ***********
         aws_secret_access_key = ***********
 
-C - Create a var file to define the vars below:
+3 - Create a var file to define the vars below:
 
     $ cat secret.json
 
@@ -19,8 +19,10 @@ C - Create a var file to define the vars below:
 
    To prepare your environnement, launch "01-Prepare-environment.yml" playbook with these extra vars passed
 
-D - To deploy the three OCP 4 clusters, launch "02-Deploy-cluster.yml" playbook
+4 - To deploy the three OCP 4 clusters, launch "02-Deploy-cluster.yml" playbook
 
+5 - To deploy the federated environment, launch "09-Deploy-demo.yml" playbook
 
+...
 
-E - To clean deployment, launch "05-Destroy-cluster.yml" playbook
+6 - To clean deployment, launch "10-Destroy-cluster.yml" playbook

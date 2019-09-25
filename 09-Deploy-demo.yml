@@ -7,4 +7,4 @@
     - role: "argocd-deploy"
     - role: "cfssl-config"
     - role: "mongofed-deploy"
-    #- role: "pacman-deploy"
+    - role: "pacman-deploy"
