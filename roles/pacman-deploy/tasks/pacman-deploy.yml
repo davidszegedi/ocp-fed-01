@@ -35,3 +35,10 @@
     chdir: "{{ var_user_homepath }}"
   become: true
   become_user: "{{ _clientvm_student_user }}"
+
+- name: Wait for the deployment to become ready
+  shell: /usr/local/bin/argocd --insecure --grpc-web login $(oc --context cluster1 -n argocd get route argocd-server -o jsonpath="{.status.ingress[*].host}{\"\n\"}"):443 --username {{ _argocd_default_user }} --password {{ _argocd_default_user_password }}; for cluster in cluster1 cluster2 cluster3; do wait-for-deployment $cluster pacman pacman;done
+  args:
+    chdir: "{{ var_user_homepath }}"
+  become: true
+  become_user: "{{ _clientvm_student_user }}"

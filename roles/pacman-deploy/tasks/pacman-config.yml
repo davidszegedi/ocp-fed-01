@@ -3,13 +3,13 @@
   shell: "oc --context cluster1 create ns haproxy-lb"
   args:
     chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/haproxy-yaml"
-  ignore_errors: yes
+  #ignore_errors: yes
 
 - name: Create the HAProxy route for external access
   shell: "oc --context cluster1 -n haproxy-lb create route edge haproxy-lb --service=haproxy-lb-service --port=8080 --insecure-policy=Allow --hostname=pacman-multicluster.$(oc --context=cluster1 get ingresses.config.openshift.io cluster -o jsonpath='{ .spec.domain }')"
   args:
     chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/haproxy-yaml"
-  ignore_errors: yes
+  #ignore_errors: yes
 
 - name: Copy haproxy config file
   copy:
@@ -21,8 +21,8 @@
   args:
     chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/haproxy-yaml"
 
-- name: pdate pacman lb hostname
-  shell: "sed -i \"s/<pacman_lb_hostname>/pacman-ingress.$(oc --context=cluster1 get ingresses.config.openshift.io cluster -o jsonpath='{ .spec.domain }')/g\" haproxy.tmpl"
+- name: Update pacman lb hostname
+  shell: "sed -i \"s/<pacman_lb_hostname>/pacman-ingress.$(oc --context=cluster1 get ingresses.config.openshift.io cluster -o jsonpath='{ .spec.domain }')/g\" haproxy"
   args:
     chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/haproxy-yaml"
 
@@ -63,4 +63,3 @@
   shell: "wait-for-deployment cluster1 haproxy-lb haproxy-lb"
   args:
     chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/haproxy-yaml"
-  
