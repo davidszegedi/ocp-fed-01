@@ -12,6 +12,6 @@
   ignore_errors: yes
 
 - name: Update HAProxy configuration
-  shell: "sed -i \"/option httpchk GET/a \\ \\ \\ \\ http-request set-header Host pacman-ingress.$(oc --context=cluster1 get ingresses.config.openshift.io cluster -o jsonpath='{ .spec.domain }')\" haproxy.tmpl"
+  shell: "sed -i \"/option httpchk GET/a \ \ \ \ http-request set-header Host pacman-ingress.$(oc --context=cluster1 get ingresses.config.openshift.io cluster -o jsonpath='{ .spec.domain }')\" haproxy.tmpl"
   args:
     chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/haproxy-yaml"
