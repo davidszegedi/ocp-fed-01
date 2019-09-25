@@ -1,0 +1,7 @@
+---
+- name: "Deploy Pacman"
+  hosts: localhost
+  gather_facts: no
+
+  roles:
+    - role: "pacman-deploy"
