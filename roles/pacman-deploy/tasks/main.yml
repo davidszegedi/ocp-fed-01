@@ -1,3 +1,3 @@
 ---
-- include: pacman-config.yml
-#- include: pacman-deploy.yml
+#- include: pacman-config.yml
+- include: pacman-deploy.yml
