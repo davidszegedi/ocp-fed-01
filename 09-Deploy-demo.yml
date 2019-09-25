@@ -1,0 +1,10 @@
+---
+- name: "Deploy Demo"
+  hosts: localhost
+  gather_facts: no
+
+  roles:
+    - role: "argocd-deploy"
+    - role: "cfssl-config"
+    - role: "mongofed-deploy"
+    #- role: "pacman-deploy"
