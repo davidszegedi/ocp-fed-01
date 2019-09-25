@@ -11,7 +11,56 @@
     chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/haproxy-yaml"
   ignore_errors: yes
 
+- name: Copy haproxy config file
+  copy:
+    src: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/haproxy-yaml/haproxy.tmpl"
+    dest: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/haproxy-yaml/haproxy"
+
 - name: Update HAProxy configuration
-  shell: "sed -i \"/option httpchk GET/a \\ \\ \\ \\ http-request set-header Host pacman-ingress.$(oc --context=cluster1 get ingresses.config.openshift.io cluster -o jsonpath='{ .spec.domain }')\" haproxy.tmpl"
+  shell: "sed -i \"/option httpchk GET/a \\ \\ \\ \\ http-request set-header Host pacman-ingress.$(oc --context=cluster1 get ingresses.config.openshift.io cluster -o jsonpath='{ .spec.domain }')\" haproxy"
   args:
     chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/haproxy-yaml"
+
+- name: pdate pacman lb hostname
+  shell: "sed -i \"s/<pacman_lb_hostname>/pacman-ingress.$(oc --context=cluster1 get ingresses.config.openshift.io cluster -o jsonpath='{ .spec.domain }')/g\" haproxy.tmpl"
+  args:
+    chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/haproxy-yaml"
+
+- name: Update pacman cluster1
+  shell: "sed -i \"s/<server1_name> <server1_pacman_route>:<route_port>/cluster1 pacman.$(oc --context=cluster1 get ingresses.config.openshift.io cluster -o jsonpath='{ .spec.domain }'):80/g\" haproxy"
+  args:
+    chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/haproxy-yaml"
+
+- name: Update pacman cluster2
+  shell: "sed -i \"s/<server2_name> <server2_pacman_route>:<route_port>/cluster2 pacman.$(oc --context=cluster2 get ingresses.config.openshift.io cluster -o jsonpath='{ .spec.domain }'):80/g\" haproxy"
+  args:
+    chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/haproxy-yaml"
+
+- name: Update pacman cluster3
+  shell: "sed -i \"s/<server3_name> <server3_pacman_route>:<route_port>/cluster3 pacman.$(oc --context=cluster3 get ingresses.config.openshift.io cluster -o jsonpath='{ .spec.domain }'):80/g\" haproxy"
+  args:
+    chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/haproxy-yaml"
+
+- name: Create the configmap
+  shell: "oc --context cluster1 -n haproxy-lb create configmap haproxy --from-file=haproxy"
+  args:
+    chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/haproxy-yaml"
+  ignore_errors: yes
+
+- name: Create the HAProxy service
+  shell: "oc --context cluster1 -n haproxy-lb create -f haproxy-clusterip-service.yaml"
+  args:
+    chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/haproxy-yaml"
+  ignore_errors: yes
+
+- name: Create the HAProxy deployment
+  shell: "oc --context cluster1 -n haproxy-lb create -f haproxy-deployment.yaml"
+  args:
+    chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/haproxy-yaml"
+  ignore_errors: yes
+
+- name: Verify HAProxy is working
+  shell: "wait-for-deployment cluster1 haproxy-lb haproxy-lb"
+  args:
+    chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/haproxy-yaml"
+  
