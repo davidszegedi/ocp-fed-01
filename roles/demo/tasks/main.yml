@@ -1,4 +1,7 @@
 ---
 - include: deploy-app.yml
   when: deploy_app == 'true'
+
+- include: restore-app.yml
+  when: restore_app == 'true'
 #- include: mongofed-deploy.yml

@@ -5,13 +5,10 @@ var_user_homepath: "/home/user1"
 var_demofolder_name: "fed-ocp-demo"
 
 deploy_app: 'false'
-restore_failover: 'false'
+restore_app: 'false'
 app_image_src: "quay.io/rcook/pacman-nodejs-app-pipeline:latest"
 
-#var_primary_node: mongo-cluster1.apps.cluster1.rheventdemo.com
-#var_secondary_node: mongo-cluster2.apps.cluster2.rheventdemo.com
-#var_third_node: mongo-cluster3.apps.cluster3.rheventdemo.com
-#var_replica_members: mongo-cluster1.apps.cluster1.rheventdemo.com:443,mongo-cluster2.apps.cluster2.rheventdemo.com:443,mongo-cluster3.apps.cluster3.rheventdemo.com:443
+demo_cluster: cluster1
 
 _clientvm_student_user: "user1"
 _argocd_project: "argocd"
