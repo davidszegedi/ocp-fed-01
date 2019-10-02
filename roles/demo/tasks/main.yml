@@ -1,4 +1,4 @@
 ---
 - include: deploy-app.yml
-  when: deploy_app == true
+  when: deploy_app == 'true'
 #- include: mongofed-deploy.yml
