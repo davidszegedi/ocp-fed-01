@@ -1,0 +1,8 @@
+---
+- name: "Launch Demo use case"
+  hosts: localhost
+  gather_facts: no
+
+  roles:
+    - role: "demo"
+    
