@@ -1,6 +1,6 @@
 ---
 - name: Update application image
-  shell: "sed -i \"s~quay.io/ifont/pacman-nodejs-app:latest~{{ app_image_src }}~g\" overlay/{{ overlay_cluster }}pacman-deployment.yaml"
+  shell: "sed -i \"s~quay.io/ifont/pacman-nodejs-app:latest~{{ app_image_src }}~g\" overlay/{{ overlay_cluster }}/pacman-deployment.yaml"
   args:
     chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/lab-7-assets"
 

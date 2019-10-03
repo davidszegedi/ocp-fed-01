@@ -6,10 +6,11 @@ var_demofolder_name: "fed-ocp-demo"
 
 deploy_app: 'false'
 deploy_app_overlay: 'false'
-restore_app: 'false'
+restore_app_overlay_mongo: 'false'
+restore_app_overlay_pacman: 'false'
 app_image_src: "quay.io/rcook/pacman-nodejs-app-pipeline:latest"
 
-demo_cluster: cluster1
+#demo_cluster: cluster1
 overlay_cluster: cluster1
 
 _clientvm_student_user: "user1"
