@@ -41,6 +41,11 @@
   args:
     chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/haproxy-yaml"
 
+- name: Update pacman cluster4
+  shell: "sed -i \"s/<server4_name> <server4_pacman_route>:<route_port>/cluster3 pacman.$(oc --context=cluster4 get ingresses.config.openshift.io cluster -o jsonpath='{ .spec.domain }'):80/g\" haproxy"
+  args:
+    chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/haproxy-yaml"
+
 - name: Create the configmap
   shell: "oc --context cluster1 -n haproxy-lb create configmap haproxy --from-file=haproxy"
   args:
