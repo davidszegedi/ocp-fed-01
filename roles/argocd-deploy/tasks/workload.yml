@@ -60,6 +60,10 @@
   delay: 10
   until: argocd_server_pod_name.stdout != ""
 
+- name: Wait for ArgoCD
+  pause:
+    seconds: 10
+
 - name: Ensure ArgoCD default user is initialized - Login into ArgoCD Server
   shell: /usr/local/bin/argocd --insecure --grpc-web login "{{ argocd_route_hostname }}":443 --username "{{ _argocd_default_user }}" --password "{{ argocd_server_pod_name.stdout }}"
   args:
@@ -115,6 +119,10 @@
   retries: 30
   delay: 10
   until: gogs_server_pod_name.stdout != ""
+
+- name: Wait for Gogs
+  pause:
+    seconds: 10
 
 - name: Ensure Gogs default user is initialized
   command: oc -n "{{ _gogs_project }}" exec "{{ gogs_server_pod_name.stdout }}" init-gogs "{{ _gogs_default_user }}" "{{ _gogs_default_user_password }}" "{{ _gogs_default_user_mail }}"

@@ -1,9 +1,9 @@
 ---
-- include: deploy-app.yml
-  when: deploy_app == 'true'
+- include: deploy-app-pacman.yml
+  when: deploy_app_pacman == 'true'
 
-- include: deploy-app-overlay.yml
-  when: deploy_app_overlay == 'true'
+- include: deploy-app-overlay-pacman.yml
+  when: deploy_app_overlay_pacman == 'true'
 
 - include: restore-app-overlay-mongo.yml
   when: restore_app_overlay_mongo == 'true'
