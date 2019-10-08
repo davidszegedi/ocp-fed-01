@@ -1,4 +1,9 @@
 ---
+- name: Change base image
+  shell: "sed -i \"s~quay.io.*~{{ app_image_base }}~g\" base/pacman-deployment.yaml"
+  args:
+    chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/lab-7-assets"
+
 - name: Define Mongo replica members
   shell: "sed -i \"s/replicamembershere/$(oc --context=cluster1 -n mongo get route mongo -o jsonpath='{.status.ingress[*].host}'),$(oc --context=cluster2 -n mongo get route mongo -o jsonpath='{.status.ingress[*].host}'),$(oc --context=cluster3 -n mongo get route mongo -o jsonpath='{.status.ingress[*].host}')/g\" base/pacman-deployment.yaml"
   args:

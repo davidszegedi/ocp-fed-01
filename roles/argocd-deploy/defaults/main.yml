@@ -6,15 +6,6 @@ silent: False
 
 ACTION: "provision"
 
-#gogs_route_hostname: gogs.apps.cluster1.rheventdemo.com
-#argocd_route_hostname: argocd.apps.cluster1.rheventdemo.com
-
-#_kubefed_project: "kube-federation-system"
-#_kubefed_project_display: "KubeFed Federation System"
-#_kubefed_subscription_csv: "kubefed-operator.v0.1.0"
-#_kubefed_operator_deployment: "kubefed-operator"
-#_kubefed_controller_deployment: "kubefed-controller-manager"
-
 _argocd_project: "argocd"
 _argocd_project_display: "ArgoCD Server"
 _argocd_server_deployment: "argocd-server"
