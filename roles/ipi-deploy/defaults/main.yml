@@ -5,6 +5,7 @@ var_cluster_info:
   - { name: cluster1, region: eu-west-3, deploy: true }
   - { name: cluster2, region: eu-central-1, deploy: true }
   - { name: cluster3, region: eu-west-1, deploy: true }
+  - { name: cluster4, region: francecentral, deploy: true }
 var_installconfig: install-config.yaml
 var_openshiftinstallstate: .openshift_install_state.json
 
