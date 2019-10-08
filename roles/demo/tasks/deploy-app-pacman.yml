@@ -1,4 +1,10 @@
 ---
+- name: Update application overlay image
+  template:
+    src: pacman-deployment.j2
+    dest: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/lab-7-assets/overlays/{{ item.name }}/pacman-deployment.yaml"
+  loop: "{{ var_cluster_info }}"
+
 - name: Update application image
   shell: "sed -i \"s~quay.io.*~{{ app_image_src }}~g\" base/pacman-deployment.yaml"
   args:
