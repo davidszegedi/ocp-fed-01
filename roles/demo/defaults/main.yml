@@ -8,9 +8,8 @@ deploy_app_pacman: 'false'
 deploy_app_overlay_pacman: 'false'
 restore_app_overlay_mongo: 'false'
 restore_app_overlay_pacman: 'false'
-app_image_src: "quay.io/rcook/pacman-nodejs-app-pipeline:latest"
+app_image_base: quay.io/gestrem/pacman:latest
 
-#demo_cluster: cluster1
 overlay_cluster: cluster1
 
 _clientvm_student_user: "user1"
