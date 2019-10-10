@@ -4,6 +4,11 @@
     src: pacman-deployment.j2
     dest: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/lab-7-assets/overlays/{{ overlay_cluster }}/pacman-deployment.yaml"
 
+- name: Commit changes to cluster {{ overlay_cluster }}
+  shell: "git commit -am 'new image to cluster' && git push origin master"
+  args:
+    chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/lab-7-assets"
+
 - name: Recreate the pacman application in {{ overlay_cluster }}
   shell: /usr/local/bin/argocd --insecure --grpc-web login $(oc --context cluster1 -n argocd get route argocd-server -o jsonpath="{.status.ingress[*].host}{\"\n\"}"):443 --username {{ _argocd_default_user }} --password {{ _argocd_default_user_password }}; argocd app create --project default --name {{ overlay_cluster }}-pacman --repo http://$(oc --context cluster1 -n gogs get route gogs -o jsonpath='{.spec.host}')/student/federation-dev.git --path labs/lab-7-assets/overlays/{{ overlay_cluster }} --dest-server $(argocd cluster list | grep {{ overlay_cluster }} | awk '{print $1}') --dest-namespace pacman --revision master --sync-policy automated; wait-for-argo-app {{ overlay_cluster }}-pacman; argocd app get {{ overlay_cluster }}-pacman
   args:
