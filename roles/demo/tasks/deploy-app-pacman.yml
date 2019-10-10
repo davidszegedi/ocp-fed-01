@@ -15,6 +15,7 @@
   shell: "git commit -am 'new image to all clusters' && git push origin master"
   args:
     chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/lab-7-assets"
+  ignore_errors: yes
 
 - name: Place new Pacman image on all clusters
   shell: /usr/local/bin/argocd --insecure --grpc-web login $(oc --context cluster1 -n argocd get route argocd-server -o jsonpath="{.status.ingress[*].host}{\"\n\"}"):443 --username {{ _argocd_default_user }} --password {{ _argocd_default_user_password }}; argocd app sync cluster1-pacman; wait-for-argo-app cluster1-pacman; argocd app sync cluster2-pacman; wait-for-argo-app cluster2-pacman; argocd app sync cluster3-pacman; wait-for-argo-app cluster3-pacman
