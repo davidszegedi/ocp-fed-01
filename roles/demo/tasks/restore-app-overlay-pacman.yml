@@ -7,7 +7,7 @@
 - name: Commit changes to cluster {{ overlay_cluster }}
   shell: "git commit -am 'new image to cluster' && git push origin master"
   args:
-    chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/lab-7-assets/overlays/{{ overlay_cluster }}"
+    chdir: "{{ var_user_homepath }}/Git/{{ _lab_gogs_clone_dir_name }}/labs/lab-7-assets"
   ignore_errors: yes
 
 - name: Recreate the pacman application in {{ overlay_cluster }}
