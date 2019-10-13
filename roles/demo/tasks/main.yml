@@ -1,12 +1,15 @@
 ---
-- include: restore-app-overlay-mongo.yml
-  when: restore_app_overlay_mongo == 'true'
+#- include: restore-app-overlay-mongo.yml
+#  when: restore_app_overlay_mongo == 'true'
 
 - include: restore-app-overlay-pacman.yml
   when: restore_app_overlay_pacman == 'true'
 
-- include: deploy-app-overlay-pacman.yml
-  when: deploy_app_overlay_pacman == 'true'
+#- include: deploy-app-overlay-pacman.yml
+#  when: deploy_app_overlay_pacman == 'true'
+
+- include: deploy-app-pacman-mlcl.yml
+  when: deploy_app_pacman_mlcl == 'true'
 
 - include: deploy-app-pacman.yml
   when: deploy_app_pacman == 'true'

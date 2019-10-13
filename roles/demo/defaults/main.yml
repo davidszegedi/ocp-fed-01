@@ -5,11 +5,11 @@ var_user_homepath: "/home/user1"
 var_demofolder_name: "fed-ocp-demo"
 
 deploy_app_pacman: 'false'
+deploy_app_pacman_mlcl: 'false'
 deploy_app_overlay_pacman: 'false'
 restore_app_overlay_mongo: 'false'
 restore_app_overlay_pacman: 'false'
 app_image_base: quay.io/gestrem/pacman:latest
-#app_background_color: blue
 
 overlay_cluster: cluster1
 
