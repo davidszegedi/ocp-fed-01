@@ -1,7 +1,0 @@
----
-- name: "Install tower-cli"
-  hosts: localhost
-  gather_facts: no
-
-  roles:
-    - role: "tower-cli-setup"
